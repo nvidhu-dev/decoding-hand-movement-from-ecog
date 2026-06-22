@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# OS
+.DS_Store
+
+# Data & model artifacts (not redistributed)
+*.mat
+*.pkl
+*.docx
+*.html
+
+# Keep the dataset documentation, ignore any data dropped into data/
+data/*
+!data/README.md
