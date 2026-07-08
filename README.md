@@ -8,7 +8,7 @@ This project decodes how a person's fingers are moving, moment to moment, direct
 
 ---
 
-## TL;DR
+## Summary
 
 - **Task:** regress continuous 5-finger flexion from raw ECoG, for 3 human subjects (62 / 48 / 64 electrodes, 1 kHz).
 - **Result:** **_r_ ≈ 0.6808** mean correlation on the held-out competition leaderboard — up from ~0.40 for a strong linear baseline.
