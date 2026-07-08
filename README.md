@@ -2,7 +2,7 @@
 
 **Predicting continuous five-finger hand movement from intracranial brain signals (ECoG) with per-subject Temporal Convolutional Networks — leaderboard correlation _r_ ≈ 0.68.**
 
-![Approaches compared: per-subject TCN architecture and average correlation by method](figures/approach_comparison.png)
+![Decoding finger movement from ECoG brain signals — brain to hand](figures/main_pic.png)
 
 This project decodes how a person's fingers are moving, moment to moment, directly from electrocorticography (ECoG) — electrodes resting on the cortical surface. Given ~62–64 channels of raw 1 kHz brain signal, the model reconstructs the continuous flexion of all five fingers. It was the final project for **BE 5210 (Brain–Computer Interfaces) at the University of Pennsylvania**.
 
@@ -29,6 +29,8 @@ Mean Pearson correlation on the competition-scored fingers (1, 2, 3, 5), best re
 | Ridge regression (improved features) | 0.42 |
 | Gradient-boosting + activity gate (*side story*) | 0.483 |
 | **Per-subject TCN (final)** | **0.681** |
+
+![Per-subject TCN architecture (A) and average correlation by method (B)](figures/approach_comparison.png)
 
 The TCN's internal 80/20 validation correlations were 0.50 / 0.57 / 0.71 for subjects 1 / 2 / 3 — subject 2 is structurally the hardest (lower SNR). See [`notebooks/tcn_finger_decoder.ipynb`](notebooks/tcn_finger_decoder.ipynb).
 
@@ -64,6 +66,10 @@ Two constraints drove the choice. We needed a model that could see far enough in
 Before the TCN, the strongest non-neural-network pipeline was a **two-stage gated decoder**: an activity detector predicts *whether* a finger is moving, and a gradient-boosted / ridge amplitude model predicts *how much*, with the two multiplied together and lightly smoothed. It reached _r_ ≈ 0.483 on the leaderboard and was notably accurate on **subject 1's thumb**, where a single high-gamma channel carries a clean movement signal.
 
 We didn't ship it as the headline: the activity gate was brittle on the hardest subject and needed several per-subject fall-backs, signalling overfitting to a heuristic rather than a robust method. But it surfaced a genuinely useful finding — *gating amplitude by movement onset helps the thumb specifically* — which is why it stays part of the story. The full details are in the [technical writeup](docs/TECHNICAL_WRITEUP.md#8-approaches-we-explored-and-abandoned).
+
+![Single high-gamma channel as a thumb activity detector](figures/thumb_activity_gate.png)
+
+*Thresholding one high-gamma channel (ch42) as a thumb activity detector: when its envelope (bottom) crosses 350 it tracks the timing of subject 1's thumb flexion (top) — r ≈ 0.35 from a single channel. This is the observation that motivated gating amplitude by movement onset.*
 
 ---
 
