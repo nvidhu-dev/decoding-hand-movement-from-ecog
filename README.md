@@ -61,7 +61,7 @@ Two constraints drove the choice. We needed a model that could see far enough in
 
 ---
 
-## Side story: the activity-gated hybrid
+## Interesting insight from the activity-gated hybrid model
 
 Before the TCN, the strongest non-neural-network pipeline was a **two-stage gated decoder**: an activity detector predicts *whether* a finger is moving, and a gradient-boosted / ridge amplitude model predicts *how much*, with the two multiplied together and lightly smoothed. It reached _r_ ≈ 0.483 on the leaderboard and was notably accurate on **subject 1's thumb**, where a single high-gamma channel carries a clean movement signal.
 
